@@ -1,0 +1,72 @@
+<div class="container">
+
+  <h1>Enterprise RAG Knowledge Assistant</h1>
+
+  <p>
+    Ask questions grounded in indexed enterprise documents.
+  </p>
+
+  <section class="card">
+
+    <textarea
+      [(ngModel)]="question"
+      rows="5"
+      placeholder="Ask a question about your documents...">
+    </textarea>
+
+    <button
+      (click)="ask()"
+      [disabled]="loading() || !question.trim()">
+
+      {{ loading() ? 'Searching...' : 'Ask' }}
+
+    </button>
+
+  </section>
+
+
+  <section
+    class="card"
+    *ngIf="answer()">
+
+    <h2>Answer</h2>
+
+    <p class="answer">
+      {{ answer() }}
+    </p>
+
+
+    <h3 *ngIf="sources().length">
+      Sources
+    </h3>
+
+    <div
+      class="source"
+      *ngFor="let source of sources()">
+
+      <strong>
+        {{ source.source }}
+      </strong>
+
+      <span *ngIf="source.page">
+        Page {{ source.page }}
+      </span>
+
+      <small>
+        {{ source.chunk_id }}
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <div
+    class="error"
+    *ngIf="error()">
+
+    {{ error() }}
+
+  </div>
+
+</div>
